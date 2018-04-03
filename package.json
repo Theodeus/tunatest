@@ -13,5 +13,8 @@
     "tuna.js"
   ],
   "author": "Oskar Eriksson",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
 }
