@@ -50,7 +50,6 @@
                         tunaNode = new tuna[type]({ bypass: true, impulse: "../tuna/impulses/ir_rev_short.wav" });
                     }
                     else if (type !== "LFO" && type !== "EnvelopeFollower") {
-                        console.log("TPYE", type)
                         tunaNode = new tuna[type]({ bypass: true });
                     } else {
                         return;
@@ -66,7 +65,6 @@
                     div.appendChild(effectLabel);
                     for (let val in tunaNode.defaults) {
                         control = document.createElement("div");
-                        console.log(val, tunaNode.defaults[val]);
                         if (tunaNode.defaults[val].type === "float") {
                             elem = createFloatSlider(tunaNode, val, tunaNode.defaults[val].min, tunaNode.defaults[val].max, tunaNode.defaults[val].value);
                         } else if (tunaNode.defaults[val].type === "int") {
@@ -107,7 +105,7 @@
             slider.max = max;
             slider.value = val;
             slider.step = (max - min) / 100;
-            slider.onchange = _ => node[name] = slider.value;
+            slider.onchange = _ => node[name] = parseFloat(slider.value);
 
             return [sliderLabel, slider];
         }
@@ -121,7 +119,7 @@
             slider.max = max;
             slider.value = val;
             slider.step = 1;
-            slider.onchange = _ => node[name] = slider.value;
+            slider.onchange = _ => node[name] = parseInt(slider.value);
 
             return [sliderLabel, slider];
         }
