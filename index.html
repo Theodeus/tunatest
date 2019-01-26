@@ -22,7 +22,8 @@
     <script>
         let context, tuna, output, tunaNode;
         let nodeTypes = [];
-        
+        let nodes = [];
+
         function start() {
             context = new AudioContext();
             tuna = new Tuna(context);
@@ -57,6 +58,7 @@
                         }
                         previousNode.connect(tunaNode);
                         previousNode = tunaNode;
+                        nodes.push(tunaNode);
 
                         //Create UI controllers for each parameter
                         let div = document.createElement("div");
@@ -108,7 +110,7 @@
             slider.max = max;
             slider.value = val;
             slider.step = (max - min) / 100;
-            slider.onchange = _ => node[name] = parseFloat(slider.value);
+            slider.oninput = _ => node[name] = parseFloat(slider.value);
 
             return [sliderLabel, slider];
         }
