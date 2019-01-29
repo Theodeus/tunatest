@@ -80,8 +80,7 @@
                                 console.error("Unsupported param type", tunaNode, val, tunaNode.defaults[val]);
                                 continue;
                             }
-                            control.appendChild(elem[0]);
-                            control.appendChild(elem[1]);
+                            elem.forEach(el => control.appendChild(el));
                             div.appendChild(control);
                         }
                         document.body.appendChild(div);
@@ -112,7 +111,23 @@
             slider.step = (max - min) / 100;
             slider.oninput = _ => node[name] = parseFloat(slider.value);
 
-            return [sliderLabel, slider];
+            if (node.defaults[name].automatable) {
+                let button = document.createElement("button");
+                button.style.float = "right";
+                button.innerText = "Automate";
+                button.onclick = _ => {
+                    if (node[name].value !== min) {
+                        node.automate(name, min, 1000, 0);
+                    } else {
+                        node.automate(name, max, 1000, 0);
+                    }
+                }
+                return [sliderLabel, slider, button];
+            } else {
+                console.log("not automatable", typeof node[name], node[name] instanceof AudioParam ? name : "", node[name] instanceof AudioParam ? node : "")
+                return [sliderLabel, slider];
+            }
+
         }
 
         function createIntSlider(node, name, min, max, val) {
@@ -126,7 +141,22 @@
             slider.step = 1;
             slider.onchange = _ => node[name] = parseInt(slider.value);
 
-            return [sliderLabel, slider];
+            if (node.defaults[name].automatable) {
+                let button = document.createElement("button");
+                button.style.float = "right";
+                button.innerText = "Automate";
+                button.onclick = _ => {
+                    if (node[name].value !== min) {
+                        node.automate(name, min, 1000, 0);
+                    } else {
+                        node.automate(name, max, 1000, 0);
+                    }
+                }
+                return [sliderLabel, slider, button];
+            } else {
+                console.log("not automatable", typeof node[name], node[name] instanceof AudioParam ? name : "", node[name] instanceof AudioParam ? node : "")
+                return [sliderLabel, slider];
+            }
         }
 
         function createCheckbox(node, name, val) {
