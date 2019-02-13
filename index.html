@@ -34,6 +34,9 @@
             }
 
             fetch("main_loop.wav")
+            // fetch("aah.wav")
+            // fetch("crazy.wav")
+            //fetch("sine.wav")
                 .then(res => res.arrayBuffer())
                 .then(buffer => context.decodeAudioData(buffer))
                 .then(buffer => {
@@ -69,9 +72,9 @@
                         for (let val in tunaNode.defaults) {
                             control = document.createElement("div");
                             if (tunaNode.defaults[val].type === "float") {
-                                elem = createFloatSlider(tunaNode, val, tunaNode.defaults[val].min, tunaNode.defaults[val].max, tunaNode.defaults[val].value);
+                                elem = createFloatSlider(tunaNode, val, tunaNode.defaults[val].min || 0, tunaNode.defaults[val].max || tunaNode.defaults[val].value, tunaNode.defaults[val].value);
                             } else if (tunaNode.defaults[val].type === "int") {
-                                elem = createIntSlider(tunaNode, val, tunaNode.defaults[val].min, tunaNode.defaults[val].max, tunaNode.defaults[val].value);
+                                elem = createIntSlider(tunaNode, val, tunaNode.defaults[val].min || 0, tunaNode.defaults[val].max || tunaNode.defaults[val].value, tunaNode.defaults[val].value);
                             } else if (tunaNode.defaults[val].type === "boolean") {
                                 elem = createCheckbox(tunaNode, val, tunaNode[val]);
                             } else if (tunaNode.defaults[val].type === "string") {
