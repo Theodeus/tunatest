@@ -11,6 +11,12 @@
             padding: 10px;
             border: 1px solid black;
         }
+        input[type="range"] {
+            width: 100%;
+        }
+        span {
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -112,23 +118,37 @@
             slider.max = max;
             slider.value = val;
             slider.step = (max - min) / 100;
-            slider.oninput = _ => node[name] = parseFloat(slider.value);
+            let valueLabel = document.createElement("span");
+            valueLabel.innerText = val;
+            slider.oninput = _ => {
+                node[name] = parseFloat(slider.value);
+                valueLabel.innerText = slider.value;
+            };
 
             if (node.defaults[name].automatable) {
                 let button = document.createElement("button");
-                button.style.float = "right";
+                let automating = false;
+                let update = _ => {
+                    if (automating) {
+                        requestAnimationFrame(update);
+                    }
+                    valueLabel.innerText = node[name].value
+                };
                 button.innerText = "Automate";
                 button.onclick = _ => {
+                    automating = true;
                     if (node[name].value !== min) {
                         node.automate(name, min, 1000, 0);
                     } else {
                         node.automate(name, max, 1000, 0);
                     }
+                    update();
+                    setTimeout(_ => automating = false, 1100);
                 }
-                return [sliderLabel, slider, button];
+                return [sliderLabel, valueLabel, slider, button];
             } else {
                 console.log("not automatable", typeof node[name], node[name] instanceof AudioParam ? name : "", node[name] instanceof AudioParam ? node : "")
-                return [sliderLabel, slider];
+                return [sliderLabel, valueLabel, slider];
             }
 
         }
@@ -142,23 +162,37 @@
             slider.max = max;
             slider.value = val;
             slider.step = 1;
-            slider.onchange = _ => node[name] = parseInt(slider.value);
+            let valueLabel = document.createElement("span");
+            valueLabel.innerText = val;
+            slider.oninput = _ => {
+                node[name] = parseInt(slider.value)
+                valueLabel.innerText = slider.value;
+            };
 
             if (node.defaults[name].automatable) {
                 let button = document.createElement("button");
-                button.style.float = "right";
+                let automating = false;
+                let update = _ => {
+                    if (automating) {
+                        requestAnimationFrame(update);
+                    }
+                    valueLabel.innerText = node[name].value
+                };
                 button.innerText = "Automate";
                 button.onclick = _ => {
+                    automating = true;
                     if (node[name].value !== min) {
                         node.automate(name, min, 1000, 0);
                     } else {
                         node.automate(name, max, 1000, 0);
                     }
+                    update();
+                    setTimeout(_ => automating = false, 1100);
                 }
-                return [sliderLabel, slider, button];
+                return [sliderLabel, valueLabel, slider, button];
             } else {
                 console.log("not automatable", typeof node[name], node[name] instanceof AudioParam ? name : "", node[name] instanceof AudioParam ? node : "")
-                return [sliderLabel, slider];
+                return [sliderLabel, valueLabel, slider];
             }
         }
 
