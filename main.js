@@ -46,12 +46,12 @@ function initUI() {
     if (type === "Cabinet") {
       tunaNode = new tuna[type]({
         bypass: true,
-        impulsePath: "../tuna/impulses/impulse_guitar.wav",
+        impulsePath: "audio/impulse_guitar.wav",
       });
     } else if (type === "Convolver") {
       tunaNode = new tuna[type]({
         bypass: true,
-        impulse: "../tuna/impulses/ir_rev_short.wav",
+        impulse: "audio/ir_rev_short.wav",
       });
     } else if (type !== "LFO" && type !== "EnvelopeFollower") {
       tunaNode = new tuna[type]({ bypass: true });
