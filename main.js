@@ -59,7 +59,7 @@ function initUI() {
     }
     nodes.push(tunaNode);
 
-    let div = document.createElement("div");
+    let div = document.getElementById("effects");
     let elem, control;
     let effectLabel = document.createElement("label");
     effectLabel.textContent = type;

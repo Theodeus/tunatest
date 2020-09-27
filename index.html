@@ -6,7 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tuna testbed</title>
     <style>
-        div {
+        button {
+            width: 100px;
+            height: 30px;
+        }
+        div, ul {
             margin: 40px;
             padding: 10px;
             border: 1px solid black;
@@ -19,7 +23,6 @@
         }
         ul {
             list-style: none;
-        
         }
     </style>
 </head>
@@ -27,6 +30,7 @@
     <button onclick="output.gain.value = output.gain.value === 1 ? 0 : 1">Mute</button>
     <button onclick="start()">Start</button>
 
+    <h2>Audio</h2>
     <ul>
         <li><label><input type="radio" name="audio" value="main_loop.wav" checked>main_loop.wav</label></li>
         <li><label><input type="radio" name="audio" value="aah.wav">aah.wav</label></li>
@@ -34,6 +38,11 @@
         <li><label><input type="radio" name="audio" value="deeerp.wav">deeerp.wav</label></li>        
         <li><label><input type="radio" name="audio" value="sine.wav">sine.wav</label></li>
     </ul>
+
+    <h2>Effects</h2>
+    You can apply effects by unchecking bypass.
+
+    <div id="effects"></div>
 
     <script src="../tuna/tuna.js"></script>
     <script src="main.js"></script>
