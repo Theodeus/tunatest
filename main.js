@@ -1,6 +1,7 @@
 let output, tunaNode;
 let nodeTypes = [];
 let nodes = [];
+// The AudioContext was not allowed to start. But I need it to create UI...
 let context = new AudioContext();
 let tuna = new Tuna(context);
 
