@@ -10,7 +10,7 @@ function start() {
     return radio.checked;
   })[0].value;
 
-  fetch(selectedAudio)
+  fetch(`audio/${selectedAudio}`)
     .then((res) => res.arrayBuffer())
     .then((buffer) => context.decodeAudioData(buffer))
     .then((buffer) => {
