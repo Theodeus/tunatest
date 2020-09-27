@@ -200,10 +200,13 @@ function createIntSlider(node, name, min, max, val) {
 }
 
 function createCheckbox(node, name, val) {
+  const id = `${node.name}_${name}`;
   let boxLabel = document.createElement("label");
   boxLabel.textContent = name;
+  boxLabel.htmlFor = id;
   let box = document.createElement("input");
   box.type = "checkbox";
+  box.id = id;
   box.checked = val;
   box.onchange = (_) => (node[name] = box.checked);
 
