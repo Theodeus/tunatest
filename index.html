@@ -42,7 +42,7 @@
             fetch("main_loop.wav")
             // fetch("aah.wav")
             // fetch("crazy.wav")
-            //fetch("sine.wav")
+            // fetch("sine.wav")
                 .then(res => res.arrayBuffer())
                 .then(buffer => context.decodeAudioData(buffer))
                 .then(buffer => {
@@ -65,6 +65,7 @@
                         } else {
                             return;
                         }
+
                         previousNode.connect(tunaNode);
                         previousNode = tunaNode;
                         nodes.push(tunaNode);
@@ -78,9 +79,9 @@
                         for (let val in tunaNode.defaults) {
                             control = document.createElement("div");
                             if (tunaNode.defaults[val].type === "float") {
-                                elem = createFloatSlider(tunaNode, val, tunaNode.defaults[val].min || 0, tunaNode.defaults[val].max || tunaNode.defaults[val].value, tunaNode.defaults[val].value);
+                                elem = createFloatSlider(tunaNode, val, Math.min(tunaNode.defaults[val].min, 0), Math.max(tunaNode.defaults[val].max, tunaNode.defaults[val].value), tunaNode.defaults[val].value);
                             } else if (tunaNode.defaults[val].type === "int") {
-                                elem = createIntSlider(tunaNode, val, tunaNode.defaults[val].min || 0, tunaNode.defaults[val].max || tunaNode.defaults[val].value, tunaNode.defaults[val].value);
+                                elem = createIntSlider(tunaNode, val, Math.min(tunaNode.defaults[val].min, 0), Math.max(tunaNode.defaults[val].max, tunaNode.defaults[val].value), tunaNode.defaults[val].value);
                             } else if (tunaNode.defaults[val].type === "boolean") {
                                 elem = createCheckbox(tunaNode, val, tunaNode[val]);
                             } else if (tunaNode.defaults[val].type === "string") {
@@ -116,8 +117,8 @@
             slider.type = "range";
             slider.min = min;
             slider.max = max;
+            slider.step = (max - min) / 1000;
             slider.value = val;
-            slider.step = (max - min) / 100;
             let valueLabel = document.createElement("span");
             valueLabel.innerText = val;
             slider.oninput = _ => {
